@@ -3,9 +3,6 @@ session_start();
 //Cargo la configuaración de la base de datos
 require_once '../config/config.php';
 
-// Cargar controladores
-require_once __DIR__ . '/../Controllers/UserController.php';
-
 // Control de la URL
 if (isset($_GET['controller'])) {
     $nombre_controlador = 'Controllers\\' . ucfirst($_GET['controller']) . 'Controller';
@@ -37,5 +34,3 @@ if (class_exists($nombre_controlador)) {
     include '../Views/home/index.php';
     include '../Views/layout/footer.php';
 }
-
-?>

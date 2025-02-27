@@ -1,8 +1,6 @@
 <?php
 namespace Controllers;
 
-session_start();
-
 require_once __DIR__ . '/../Models/User.php';
 
 class UserController
@@ -23,15 +21,15 @@ class UserController
             //Validación del email
             if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['register_error'] = "El email no es válido";
-                header("Location: /proyectoTiendaFinal/Public/index.php");
-                return;
+                header("Location: index.php");
+                exit();
             }
             
             //Verificación de si ya existe el usuario
             if ($user->checkUserExists($_POST['email'])) {
                 $_SESSION['register_error'] = "El email ya está registrado";
-                header("Location: /proyectoTiendaFinal/Public/index.php");
-                return;
+                header("Location: index.php");
+                exit();
             }
             
             // Asignar valores
@@ -52,7 +50,7 @@ class UserController
             $_SESSION['register'] = "El registro ha fallado";
         }
         
-        header("Location: /proyectoTiendaFinal/Public/index.php");
+        header("Location: index.php");
         exit();
     }
 }
