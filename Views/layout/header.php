@@ -19,9 +19,9 @@
         <!-- Menú de navegación -->
         <nav class="menu">
             <ul>
-                <li><a href="index.php">Inicio</a></li>
                 <li><a href="#">Categoría 1</a></li>
                 <li><a href="#">Categoría 2</a></li>
                 <li><a href="index.php?controller=user&action=registro">Registro</a></li>
+                <li><a href="index.php?controller=user&action=loginForm" class="button">Iniciar sesión</a></li>
             </ul>
         </nav>

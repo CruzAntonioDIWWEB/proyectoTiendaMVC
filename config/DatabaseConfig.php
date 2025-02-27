@@ -5,17 +5,14 @@ namespace config;
 use PDO;
 use PDOException;
 
-class DatabaseConfig
-{
+class DatabaseConfig{
     private $connection;
-    
     private $host;
     private $dbname;
     private $user;
     private $password;
     
-    public function __construct()
-    {
+    public function __construct(){
         //Cargo las variables de entorno desde el fichero .env
         require_once __DIR__ . '/../vendor/autoload.php';
         
@@ -35,8 +32,7 @@ class DatabaseConfig
     /**
      * Se establece la conexión a la base de datos
      */
-    private function connect()
-    {
+    private function connect(){
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset=utf8";
             $this->connection = new PDO($dsn, $this->user, $this->password);

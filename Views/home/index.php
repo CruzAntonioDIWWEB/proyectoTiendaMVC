@@ -1,6 +1,6 @@
 <!-- Contenido -->
 <section class="content">
-
+    <!-- Mensaje de exito o fracaso en el registro -->
     <?php if (isset($_SESSION['register'])): ?>
         <div class="alert <?= $_SESSION['register'] == 'Registro Completado' ? 'success' : 'error' ?>">
             <?= $_SESSION['register'] ?>
@@ -16,18 +16,22 @@
     <?php endif; ?>
 
     <aside class="sidebar">
-        <div class="login block_aside">
-            <h3>Identifícate</h3>
-            <form action="#" method="post">
-                <label for="email">Email</label>
-                <input type="email" name="email" required>
-                <label for="password">Contraseña</label>
-                <input type="password" name="password" required>
-                <input type="submit" value="Enviar">
-            </form>
-            <a href="#">Mis pedidos</a>
-            <a href="#">Gestionar pedidos</a>
-            <a href="#">Gestionar categorías</a>
+        <div class="block_aside">
+            <?php if(isset($_SESSION['usuario'])): ?>
+                <h3>Bienvenido, <?= $_SESSION['usuario']['nombre'] ?></h3>
+                <a href="index.php?controller=user&action=logout" class="button">Cerrar sesión</a>
+                <a href="#">Mis pedidos</a>
+                
+                <?php if(isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] == 'admin'): ?>
+                    <a href="#">Gestionar pedidos</a>
+                    <a href="#">Gestionar categorías</a>
+                    <a href="#">Gestionar productos</a>
+                <?php endif; ?>
+            <?php else: ?>
+                <h3>Entrar a la web</h3>
+                
+                <a href="index.php?controller=user&action=registro" class="button">Regístrate</a>
+            <?php endif; ?>
         </div>
     </aside>
 
@@ -35,21 +39,21 @@
     <section class="central">
         <article class="product">
             <img src="../assets/img/logotipo.jpg" alt="Producto">
-            <h2>Producto 1</h2>
+            <h2>Choto 1</h2>
             <p>30€</p>
             <a href="#">Comprar</a>
         </article>
 
         <article class="product">
             <img src="../assets/img/logotipo.jpg" alt="Producto">
-            <h2>Producto 1</h2>
+            <h2>Choto 2</h2>
             <p>30€</p>
             <a href="#">Comprar</a>
         </article>
 
         <article class="product">
             <img src="../assets/img/logotipo.jpg" alt="Producto">
-            <h2>Producto 1</h2>
+            <h2>Choto 3</h2>
             <p>30€</p>
             <a href="#">Comprar</a>
         </article>

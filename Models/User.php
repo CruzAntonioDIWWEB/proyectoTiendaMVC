@@ -6,8 +6,7 @@ use PDO;
 use config\DatabaseConfig;
 
 //Clase que representa una fila de la tabla usuarios
-class User
-{
+class User{
     //Propiedades de la clase
     private $id;
     private $nombre;
@@ -147,41 +146,63 @@ class User
         }
     }
 
-    /**
-     * Autentica a un usuario por su email y contraseña
-     * @param string $email Email del usuario
-     * @param string $password Contraseña sin cifrar
-     * @return mixed El objeto User si la autenticación es correcta, false en caso contrario
-     */
-    public function login($email, $password)
-    {
-        try {
-            //Verificar si el usuario existe
-            $query = $this->db->prepare("SELECT * FROM usuarios WHERE email = :email");
-            $query->bindParam(':email', $email, PDO::PARAM_STR);
-            $query->execute();
+/**
+ * Autentica a un usuario por su email y contraseña
+ * @param string $email Email del usuario
+ * @param string $password Contraseña sin cifrar
+ * @param bool $recuerdame Si se debe recordar el email en una cookie
+ * @return mixed El objeto User si la autenticación es correcta, false en caso contrario
+ */
+public function login($email, $password, $recuerdame = false){
+        //Validación de entradas
+        $email = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
 
-            if ($query->rowCount() == 1) {
-                $usuario = $query->fetch(PDO::FETCH_ASSOC);
+        //Verifico si el usuario existe
+        $consulta = $this->db->prepare("SELECT * FROM usuarios WHERE email = :email");
+        $consulta->bindParam(':email', $email, PDO::PARAM_STR);
+        $consulta->execute();
 
-                //Verificar la contraseña
-                if (password_verify($password, $usuario['password'])) {
-                    //Asignar los datos del usuario al objeto
-                    $this->id = $usuario['id'];
-                    $this->nombre = $usuario['nombre'];
-                    $this->apellidos = $usuario['apellidos'];
-                    $this->email = $usuario['email'];
-                    $this->password = $usuario['password']; //Ya está cifrada
-                    $this->rol = $usuario['rol'];
-                    $this->imagen = $usuario['imagen'];
-
-                    return $this;
+        if($consulta->rowCount() > 0){
+            $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
+        
+            //Verifico la contraseña
+            if(password_verify($password, $usuario['password'])){
+                //Asigno los datos del usuario a las propiedades de la clase
+                $this->id = $usuario['id'];
+                $this->nombre = $usuario['nombre'];
+                $this->apellidos = $usuario['apellidos'];
+                $this->email = $usuario['email'];
+                $this->rol = $usuario['rol'];
+                $this->imagen = $usuario['imagen'];
+        
+                //Guardo el usuario en la sesión
+                $_SESSION['usuario'] = [
+                    'id' => $this->id,
+                    'nombre' => $this->nombre,
+                    'apellidos' => $this->apellidos,
+                    'email' => $this->email,
+                    'rol' => $this->rol
+                ];
+        
+                $_SESSION['login'] = "Login correcto";
+        
+                if($recuerdame){
+                    //Creo una cookie con el email del usuario
+                    setcookie('emailLogin', $this->email, time() + (30 * 24 * 60 * 60), '/');
+                } else {
+                    //Si no se marca la casilla de recordar, se elimina la cookie
+                    setcookie('emailLogin', "", time() - 3600, '/');
                 }
+        
+                return $this;
+            } else {
+                //Contraseña incorrecta
+                $_SESSION['errorLogin'] = "Email o contraseña incorrectos";
+                return false;
             }
-
-            return false;
-        } catch (\PDOException $e) {
-            error_log("Error en login: " . $e->getMessage());
+        } else {
+            //Usuario no encontrado
+            $_SESSION['errorLogin'] = "Email o contraseña incorrectos";
             return false;
         }
     }
