@@ -1,30 +1,18 @@
 <?php
 
 namespace config;
-use PDO;
-use PDOException;
 
-require_once __DIR__ . '/../vendor/autoload.php'; // carga el autoload de composer
+//Carga el autoload de Composer
+require_once __DIR__ . '/../vendor/autoload.php';
 
-use Dotenv\Dotenv;
+//Importa la clase DatabaseConfig
+require_once __DIR__ . '/DatabaseConfig.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../'); // carga el archivo .env 
-$dotenv->load(); // carga las variables de entorno
+//Crea una instancia de la configuración de base de datos
+$db = new DatabaseConfig();
 
-// Configuración de la base de datos
-define('DBHOST', $_ENV['DBHOST']);
-define('DBNAME', $_ENV['DBNAME']);
-define('DBUSER', $_ENV['DBUSER']);
-define('DBPASSWORD', $_ENV['DBPASSWORD']);
+//Obtiene la conexión a la base de datos
+$pdo = $db->getConnection();
 
-//Conexión a la base de datos usando PDO
-try {
-    $dsn = 'mysql:host=' . DBHOST . ';dbname=' . DBNAME . ';charset=utf8';
-    $pdo = new PDO($dsn, DBUSER, DBPASSWORD);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Conexión exitosa con la base de datos";
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
-
-?>
+//Esto devuelve la conexión para que pueda ser utilizada en otros archivos
+return $pdo; 
