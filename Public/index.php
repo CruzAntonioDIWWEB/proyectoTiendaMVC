@@ -1,4 +1,5 @@
 <?php
+session_start();
 //Cargo la configuaración de la base de datos
 require_once '../config/config.php';
 
@@ -36,4 +37,5 @@ if (class_exists($nombre_controlador)) {
     include '../Views/home/index.php';
     include '../Views/layout/footer.php';
 }
+
 ?>

@@ -1,5 +1,20 @@
 <!-- Contenido -->
 <section class="content">
+
+    <?php if (isset($_SESSION['register'])): ?>
+        <div class="alert <?= $_SESSION['register'] == 'Registro Completado' ? 'success' : 'error' ?>">
+            <?= $_SESSION['register'] ?>
+        </div>
+        <?php unset($_SESSION['register']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['register_error'])): ?>
+        <div class="alert error">
+            <?= $_SESSION['register_error'] ?>
+        </div>
+        <?php unset($_SESSION['register_error']); ?>
+    <?php endif; ?>
+
     <aside class="sidebar">
         <div class="login block_aside">
             <h3>Identifícate</h3>
