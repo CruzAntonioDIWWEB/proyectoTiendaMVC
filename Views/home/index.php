@@ -24,7 +24,7 @@
                 
                 <?php if(isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] == 'admin'): ?>
                     <a href="#">Gestionar pedidos</a>
-                    <a href="#">Gestionar categorías</a>
+                    <a href="index.php?controller=category&action=index">Gestionar categorías</a>
                     <a href="#">Gestionar productos</a>
                 <?php endif; ?>
             <?php else: ?>

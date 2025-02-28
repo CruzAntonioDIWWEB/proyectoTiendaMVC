@@ -1,36 +1,40 @@
 <?php
 session_start();
-//Cargo la configuaración de la base de datos
-require_once '../config/config.php';
 
-// Control de la URL
+// Cargo la configuración y el autoload
+require_once '../config/config.php';
+require_once '../vendor/autoload.php';
+
+// Definir controlador y acción por defecto
+$controllerName = 'Dashboard';
+$action = 'index';
+
+// Obtener controlador y acción de la URL si existen
 if (isset($_GET['controller'])) {
-    $nombre_controlador = 'Controllers\\' . ucfirst($_GET['controller']) . 'Controller';
-} else {
-    // Controlador por defecto
-    include '../Views/layout/header.php';
-    include '../Views/home/index.php';
-    include '../Views/layout/footer.php';
-    exit();
+    $controllerName = ucfirst($_GET['controller']);
 }
 
-// Comprobar si existe el controlador
-if (class_exists($nombre_controlador)) {
-    $controlador = new $nombre_controlador();
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+}
+
+// Formar el nombre completo del controlador con namespace
+$controllerClass = "Controllers\\{$controllerName}Controller";
+
+// Usando un enfoque más directo con el autoloader
+if (class_exists($controllerClass)) {
+    $controller = new $controllerClass();
     
-    // Comprobar si existe la acción
-    if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
-        $action = $_GET['action'];
-        $controlador->$action();
+    if (method_exists($controller, $action)) {
+        // Ejecutar la acción solicitada
+        $controller->$action();
     } else {
-        // Acción por defecto
-        include '../Views/layout/header.php';
-        include '../Views/home/index.php';
-        include '../Views/layout/footer.php';
+        // Si la acción no existe, usar el método index del Dashboard
+        $dashboard = new Controllers\DashboardController();
+        $dashboard->index();
     }
 } else {
-    // Controlador por defecto
-    include '../Views/layout/header.php';
-    include '../Views/home/index.php';
-    include '../Views/layout/footer.php';
+    // Si el controlador no existe, cargar el Dashboard por defecto
+    $dashboard = new Controllers\DashboardController();
+    $dashboard->index();
 }
