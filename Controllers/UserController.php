@@ -79,12 +79,14 @@ class UserController{
         }
     }
 
+    //Función para mostrar el formulario de login junto con el header y footer
     public function loginForm(){
         require_once __DIR__ . '/../Views/layout/header.php';
         require_once __DIR__ . '/../Views/user/login.php';
         require_once __DIR__ . '/../Views/layout/footer.php';
     }
 
+    //Función para cerrar sesión
     public function logout(){
         if(isset($_SESSION['usuario'])){
             unset($_SESSION['usuario']);

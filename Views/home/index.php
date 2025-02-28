@@ -28,9 +28,7 @@
                     <a href="#">Gestionar productos</a>
                 <?php endif; ?>
             <?php else: ?>
-                <h3>Entrar a la web</h3>
-                
-                <a href="index.php?controller=user&action=registro" class="button">Regístrate</a>
+                <h3>No se ha identificado</h3>
             <?php endif; ?>
         </div>
     </aside>

@@ -174,3 +174,124 @@ body {
     color: white;
     margin-top: 20px;
 }
+
+/* Estilos para formularios de registro y login */
+.form_container {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ff5722;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #444;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+    border-color: #ff5722;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.2);
+}
+
+form input[type="submit"],
+.button {
+    background-color: #ff5722;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover,
+.button:hover {
+    background-color: #e64a19;
+}
+
+/* Estilos para el checkbox de recordar contraseña */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Mensajes de alerta */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Enlaces */
+.links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.links a {
+    color: #ff5722;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive para formularios */
+@media (max-width: 768px) {
+    .form_container {
+        width: 90%;
+        padding: 15px;
+    }
+}
