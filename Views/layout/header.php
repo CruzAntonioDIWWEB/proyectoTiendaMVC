@@ -1,5 +1,9 @@
 <?php
 use Models\Category;
+
+// Obtener las categorías para el menú
+$categoryModel = new Category();
+$menuCategories = $categoryModel->getAll();
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +27,20 @@ use Models\Category;
         <!-- Menú de navegación -->
         <nav class="menu">
             <ul>
+                <!-- Categorías del menú -->
+                <?php if (!empty($menuCategories)): ?>
+                    <li>
+                            <?php foreach ($menuCategories as $cat): ?>
+                                <li>
+                                    <a href="index.php?controller=product&action=category&id=<?= $cat['id'] ?>">
+                                        <?= $cat['nombre'] ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                    </li>
+                <?php endif; ?>
+                
+                <!-- Enlaces de usuario -->
                 <li><a href="index.php?controller=user&action=registro">Registro</a></li>
                 <li><a href="index.php?controller=user&action=loginForm">Iniciar sesión</a></li>
             </ul>
