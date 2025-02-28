@@ -1,3 +1,7 @@
+<?php 
+use Models\Category;
+?>
+
 <h1>Gestionar categorías</h1>
 
 <?php if (isset($_SESSION['category'])): ?>
@@ -31,13 +35,13 @@
         <?php if (!empty($categorias)): ?>
             <?php foreach ($categorias as $categoria): ?>
                 <tr>
-                    <td><?php $categoria['id'] ?></td>
-                    <td><?php $categoria['nombre'] ?></td>
+                    <td><?= $categoria['id'] ?></td> <!-- = es un echo -->
+                    <td><?= $categoria['nombre'] ?></td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="3">No hay categorías disponibles</td>
+                <td colspan="2">No hay categorías disponibles</td>
             </tr>
         <?php endif; ?>
     </tbody>
