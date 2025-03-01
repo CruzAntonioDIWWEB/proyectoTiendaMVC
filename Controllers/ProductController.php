@@ -22,5 +22,18 @@ require_once __DIR__ . '/../Models/Product.php';
 
             require_once __DIR__ . '/../Views/products/gestion.php';
         }
+
+        public function create() {
+            //Verifico si el usuario es administrador
+            \Lib\Utils::isAdmin();
+
+            require_once __DIR__ . '/../Views/layout/header.php';
+            require_once __DIR__ . '/../Views/products/create.php';
+            require_once __DIR__ . '/../Views/layout/footer.php';
+        }
+
+        public function save(){
+            
+        }
     }
 ?>
