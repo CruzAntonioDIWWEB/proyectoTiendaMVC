@@ -6,7 +6,7 @@ use config\DatabaseConfig;
 
 class Product {
     private $id;
-    private $categoria_id;
+    private $categoria;
     private $nombre;
     private $descripcion;
     private $precio;
@@ -28,8 +28,8 @@ class Product {
         return $this->id;
     }
 
-    public function getCategoriaId() {
-        return $this->categoria_id;
+    public function getCategory() {
+        return $this->categoria;
     }
 
     public function getNombre() {
@@ -66,8 +66,8 @@ class Product {
         $this->id = $id;
     }
 
-    public function setCategoriaId($categoria_id) {
-        $this->categoria_id = $categoria_id;
+    public function setCategory($categoria) {
+        $this->categoria = $categoria;
     }
 
     public function setNombre($nombre) {
@@ -109,5 +109,7 @@ class Product {
             return false;
         }
     }
+
+    
 }
 ?>

@@ -32,6 +32,9 @@
         <?php endforeach; ?>
         </select>
         
+        <label for="imagen">Imagen del producto</label>
+        <input type="file" name="imagen" required>
+
         <input type="submit" value="Guardar producto">
     </form>
 </div>
