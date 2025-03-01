@@ -10,11 +10,10 @@ class CategoryController {
      * Muestra la lista de categorías
      */
     public function index() {
-        // Obtener todas las categorías
+        //Obtengo todas las categorías
         $categoria = new \Models\Category();
         $categorias = $categoria->getAll();
         
-        // Incluir las vistas
         require_once __DIR__ . '/../Views/layout/header.php';
         require_once __DIR__ . '/../Views/category/index.php';
         require_once __DIR__ . '/../Views/layout/footer.php';
@@ -24,13 +23,13 @@ class CategoryController {
      * Muestra el formulario para crear una categoría
      */
     public function create() {
-        // Verificar si el usuario es administrador
+        //Primero verifico si el usuario es administrador
         if (\Lib\Utils::isAdmin()) {
             require_once __DIR__ . '/../Views/layout/header.php';
             require_once __DIR__ . '/../Views/category/create.php';
             require_once __DIR__ . '/../Views/layout/footer.php';
         } else {
-            // Si no es administrador, redirigir al inicio
+            //Si no es administrador, redirijo al inicio
             header("Location: index.php");
             exit();
         }
@@ -40,24 +39,23 @@ class CategoryController {
      * Guarda una nueva categoría
      */
     public function save() {
-        // Verificar si el usuario es administrador
+        //Verifico si el usuario es administrador
         if (\Lib\Utils::isAdmin()) {
             if (isset($_POST) && !empty($_POST['nombre'])) {
-                // Crear objeto categoría
+                //Creo una categoría
                 $categoria = new \Models\Category();
                 
-                // Verificar si ya existe una categoría con ese nombre
+                //Y verifico si ya existe una categoría con ese nombre
                 if ($categoria->checkCategoryExists($_POST['nombre'])) {
                     $_SESSION['category_error'] = "Ya existe una categoría con ese nombre";
                     header("Location: index.php?controller=category&action=create");
                     exit();
                 }
                 
-                // Asignar valores
+                //Asigno el nombre de la categoria
                 $categoria->setNombre($_POST['nombre']);
-                $categoria->setDescripcion(isset($_POST['descripcion']) ? $_POST['descripcion'] : '');
                 
-                // Guardar la categoría
+                //Guardo la categoría
                 $save = $categoria->save();
                 
                 if ($save) {
@@ -80,16 +78,17 @@ class CategoryController {
      * Muestra el formulario para editar una categoría
      */
     public function edit() {
-        // Verificar si el usuario es administrador
+        //Verifico si el usuario es administrador
         if (\Lib\Utils::isAdmin()) {
             if (isset($_GET['id'])) {
                 $id = (int)$_GET['id'];
                 
-                // Obtener la categoría
+                //Obtengo la categoría
                 $categoria = new \Models\Category();
-                $categoria = $categoria->getOneCategory($id);
+                $categoriaEncontrada = $categoria->getOneCategory($id);
                 
-                if ($categoria) {
+                if ($categoriaEncontrada) {
+                    //$categoriaEncontrada ahora es el objeto Category con los datos cargados
                     require_once __DIR__ . '/../Views/layout/header.php';
                     require_once __DIR__ . '/../Views/category/edit.php';
                     require_once __DIR__ . '/../Views/layout/footer.php';
@@ -104,7 +103,7 @@ class CategoryController {
                 exit();
             }
         } else {
-            // Si no es administrador, redirigir al inicio
+            //Si no es administrador, se redirige al inicio
             header("Location: index.php");
             exit();
         }
@@ -114,28 +113,26 @@ class CategoryController {
      * Actualiza los datos de una categoría
      */
     public function update() {
-        // Verificar si el usuario es administrador
+        //Verifico si el usuario es administrador
         if (\Lib\Utils::isAdmin()) {
             if (isset($_POST) && !empty($_POST['nombre']) && isset($_POST['id'])) {
                 $id = (int)$_POST['id'];
                 $nombre = $_POST['nombre'];
                 
-                // Crear objeto categoría
                 $categoria = new \Models\Category();
                 
-                // Verificar si ya existe otra categoría con ese nombre
+                //Verifico si ya existe otra categoría con ese nombre
                 if ($categoria->checkCategoryExistsExcept($nombre, $id)) {
                     $_SESSION['category_error'] = "Ya existe otra categoría con ese nombre";
                     header("Location: index.php?controller=category&action=edit&id=$id");
                     exit();
                 }
                 
-                // Asignar valores
+                //Asino nombre e id
                 $categoria->setId($id);
                 $categoria->setNombre($nombre);
-                $categoria->setDescripcion(isset($_POST['descripcion']) ? $_POST['descripcion'] : '');
                 
-                // Actualizar la categoría
+                //Actualiza la categoría
                 $update = $categoria->update();
                 
                 if ($update) {
@@ -158,16 +155,14 @@ class CategoryController {
      * Elimina una categoría
      */
     public function delete() {
-        // Verificar si el usuario es administrador
         if (\Lib\Utils::isAdmin()) {
             if (isset($_GET['id'])) {
                 $id = (int)$_GET['id'];
                 
-                // Crear objeto categoría
                 $categoria = new \Models\Category();
                 $categoria->setId($id);
                 
-                // Eliminar la categoría
+                //Elimino la categoría
                 $delete = $categoria->delete();
                 
                 if ($delete) {

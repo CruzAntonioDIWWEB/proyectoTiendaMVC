@@ -13,11 +13,10 @@ use Models\Category;
 
 <div class="form_container">
     <form action="index.php?controller=category&action=update" method="POST">
-        <input type="hidden" name="id" value="<?= $categoria->getId() ?>">
+    <input type="hidden" name="id" value="<?= $categoriaEncontrada->getId() ?>">
         
         <label for="nombre">Nombre de la categoría</label>
-        <input type="text" name="nombre" value="<?= $categoria->getNombre() ?>" required>
-        
+        <input type="text" name="nombre" value="<?= $categoriaEncontrada->getNombre() ?>" required>
         <input type="submit" value="Actualizar categoría">
     </form>
 </div>

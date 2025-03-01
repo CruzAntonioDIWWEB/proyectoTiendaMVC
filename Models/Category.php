@@ -5,20 +5,18 @@ use PDO;
 use config\DatabaseConfig;
 
 class Category {
-    // Propiedades
     private $id;
     private $nombre;
-    private $descripcion;
     private $db;
 
-    // Constructor
+    //Constructor
     public function __construct() {
-        // Conexión a la base de datos
+        //Conexión a la base de datos
         $dbConfig = new DatabaseConfig();
         $this->db = $dbConfig->getConnection();
     }
 
-    // Getters
+    //Getters
     public function getId() {
         return $this->id;
     }
@@ -27,21 +25,13 @@ class Category {
         return $this->nombre;
     }
 
-    public function getDescripcion() {
-        return $this->descripcion;
-    }
-
-    // Setters
+    //Setters
     public function setId($id) {
         $this->id = $id;
     }
 
     public function setNombre($nombre) {
         $this->nombre = $nombre;
-    }
-
-    public function setDescripcion($descripcion) {
-        $this->descripcion = $descripcion;
     }
 
     /**
@@ -54,7 +44,6 @@ class Category {
             $sql = "INSERT INTO categorias (nombre) VALUES (:nombre)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':nombre', $this->nombre, PDO::PARAM_STR);
-            // Ya no incluimos el campo descripcion
             
             return $stmt->execute();
         } catch (\PDOException $e) {
@@ -131,9 +120,6 @@ class Category {
             if ($resultado) {
                 $this->id = $resultado['id'];
                 $this->nombre = $resultado['nombre'];
-                if (isset($resultado['descripcion'])) {
-                    $this->descripcion = $resultado['descripcion'];
-                }
                 
                 return $this;
             }
