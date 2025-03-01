@@ -20,12 +20,10 @@
             <?php if(isset($_SESSION['usuario'])): ?>
                 <h3>Bienvenido, <?= $_SESSION['usuario']['nombre'] ?></h3>
                 <a href="index.php?controller=user&action=logout" class="button">Cerrar sesión</a>
-                <a href="#">Mis pedidos</a>
                 
                 <?php if(isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] == 'admin'): ?>
-                    <a href="#">Gestionar pedidos</a>
                     <a href="index.php?controller=category&action=index">Gestionar categorías</a>
-                    <a href="#">Gestionar productos</a>
+                    <a href="index.php?controller=product&action=index">Gestionar productos</a>
                 <?php endif; ?>
             <?php else: ?>
                 <h3>No se ha identificado</h3>

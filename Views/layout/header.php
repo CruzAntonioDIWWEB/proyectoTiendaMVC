@@ -30,10 +30,10 @@ $menuCategories = $categoryModel->getAll();
                 <!-- Categorías del menú -->
                 <?php if (!empty($menuCategories)): ?>
                     <li>
-                            <?php foreach ($menuCategories as $cat): ?>
+                            <?php foreach ($menuCategories as $categoria): ?>
                                 <li>
-                                    <a href="index.php?controller=product&action=category&id=<?= $cat['id'] ?>">
-                                        <?= $cat['nombre'] ?>
+                                    <a href="index.php?controller=product&action=category&id=<?= $categoria['id'] ?>">
+                                        <?= $categoria['nombre'] ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>

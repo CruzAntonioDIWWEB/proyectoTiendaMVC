@@ -119,7 +119,7 @@ class Category {
      * @param int $id ID de la categoría
      * @return mixed Objeto con los datos de la categoría o false
      */
-    public function getOne($id) {
+    public function getOneCategory($id) {
         try {
             $sql = "SELECT * FROM categorias WHERE id = :id";
             $stmt = $this->db->prepare($sql);

@@ -87,7 +87,7 @@ class CategoryController {
                 
                 // Obtener la categoría
                 $categoria = new \Models\Category();
-                $categoria = $categoria->getOne($id);
+                $categoria = $categoria->getOneCategory($id);
                 
                 if ($categoria) {
                     require_once __DIR__ . '/../Views/layout/header.php';
