@@ -94,9 +94,9 @@ class Category {
     public function getAll() {
         try {
             $sql = "SELECT * FROM categorias ORDER BY id DESC";
-            $categorias = $this->db->query($sql);
+            $stmt = $this->db->query($sql);
             
-            return $categorias->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             error_log("Error al obtener categorías: " . $e->getMessage());
             return array();

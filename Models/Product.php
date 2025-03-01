@@ -97,5 +97,17 @@ class Product {
     public function setImagen($imagen) {
         $this->imagen = $imagen;
     }
+
+    public function getAll(){
+        try {
+            $sql = "SELECT * FROM productos ORDER BY id DESC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (\PDOException $e) {
+            error_log("Error en la consulta de productos: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>
