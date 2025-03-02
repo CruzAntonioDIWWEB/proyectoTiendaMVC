@@ -139,5 +139,98 @@ class Product {
             return false;
         }
     }
+
+    /**
+ * Obtiene un producto por su id
+ * @param int $id ID del producto
+ * @return mixed Objeto con los datos del producto o false
+ */
+public function getOneProduct($id) {
+    try {
+        $sql = "SELECT * FROM productos WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($resultado) {
+            $this->id = $resultado['id'];
+            $this->categoria_id = $resultado['categoria_id'];
+            $this->nombre = $resultado['nombre'];
+            $this->descripcion = $resultado['descripcion'];
+            $this->precio = $resultado['precio'];
+            $this->stock = $resultado['stock'];
+            $this->oferta = $resultado['oferta'];
+            $this->fecha = $resultado['fecha'];
+            $this->imagen = $resultado['imagen'];
+            
+            return $this;
+        }
+        
+        return false;
+    } catch (\PDOException $e) {
+        error_log("Error al obtener el producto: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * Actualiza los datos de un producto existente
+ * @return bool true si la actualización fue exitosa, false en caso contrario
+ */
+public function update() {
+    try {
+        // Valor predeterminado para oferta si no está establecido
+        $oferta = $this->oferta ?? "no";
+        
+        $sql = "UPDATE productos SET categoria_id = :categoria_id, nombre = :nombre, 
+                descripcion = :descripcion, precio = :precio, stock = :stock, 
+                oferta = :oferta";
+        
+        // Si se proporciona una nueva imagen, actualizarla también
+        if ($this->imagen) {
+            $sql .= ", imagen = :imagen";
+        }
+        
+        $sql .= " WHERE id = :id";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':categoria_id', $this->categoria_id, PDO::PARAM_INT);
+        $stmt->bindParam(':nombre', $this->nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':descripcion', $this->descripcion, PDO::PARAM_STR);
+        $stmt->bindParam(':precio', $this->precio, PDO::PARAM_STR);
+        $stmt->bindParam(':stock', $this->stock, PDO::PARAM_INT);
+        $stmt->bindParam(':oferta', $oferta, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        
+        // Binds la imagen solo si se proporciona
+        if ($this->imagen) {
+            $stmt->bindParam(':imagen', $this->imagen, PDO::PARAM_STR);
+        }
+        
+        return $stmt->execute();
+    } catch (\PDOException $e) {
+        error_log("Error al actualizar producto: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * Elimina un producto de la base de datos
+ * @return bool true si la eliminación fue exitosa, false en caso contrario
+ */
+public function delete() {
+    try {
+        $sql = "DELETE FROM productos WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        
+        return $stmt->execute();
+    } catch (\PDOException $e) {
+        error_log("Error al eliminar producto: " . $e->getMessage());
+        return false;
+    }
+}
 }
 ?>
