@@ -19,14 +19,14 @@
     <form action="index.php?controller=user&action=loginAction" method="post">
         <label for="email">Email</label>
         <input type="email" name="email" required
-               value="<?= isset($_COOKIE['emailLogin']) ? $_COOKIE['emailLogin'] : '' ?>">
+            value="<?= isset($_COOKIE['emailLogin']) ? $_COOKIE['emailLogin'] : '' ?>">
 
         <label for="password">Contraseña</label>
         <input type="password" name="password" required>
 
         <div class="checkbox-container">
             <input type="checkbox" name="recuerdame" id="recuerdame"
-                   <?= isset($_COOKIE['emailLogin']) ? 'checked' : '' ?>>
+                <?= isset($_COOKIE['emailLogin']) ? 'checked' : '' ?>>
             <label for="recuerdame">Recordar email</label>
         </div>
 

@@ -13,7 +13,7 @@
         <label for="nombre">Nombre de la categoría</label>
         <input type="text" name="nombre" required maxlength="100" pattern="[A-Za-zÀ-ÖØ-öø-ÿ0-9\s\-\.]{3,100}">
         <small>El nombre debe tener entre 3 y 100 caracteres alfanuméricos.</small>
-        
+
         <input type="submit" value="Guardar categoría">
     </form>
 </div>

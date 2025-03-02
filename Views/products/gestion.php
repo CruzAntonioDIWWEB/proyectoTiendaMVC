@@ -42,13 +42,13 @@
                     <td><?= $producto['stock'] ?></td>
                     <?php if (\Lib\Utils::isAdmin()): ?>
                         <td>
-                            <a href="index.php?controller=product&action=delete&id=<?= $producto['id'] ?>" 
-                               class="button" 
-                               onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                            <a href="index.php?controller=product&action=delete&id=<?= $producto['id'] ?>"
+                                class="button"
+                                onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
                                 Eliminar
                             </a>
-                            <a href="index.php?controller=product&action=edit&id=<?= $producto['id'] ?>" 
-                               class="button" >
+                            <a href="index.php?controller=product&action=edit&id=<?= $producto['id'] ?>"
+                                class="button">
                                 Editar
                             </a>
                         </td>

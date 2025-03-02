@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-// Cargo la configuración y el autoload
+//Cargo la configuración y el autoload
 require_once '../config/config.php';
 require_once '../vendor/autoload.php';
 
-// Definir controlador y acción por defecto
+//Defino controlador y acción por defecto
 $controllerName = 'Dashboard';
 $action = 'index';
 
-// Obtener controlador y acción de la URL si existen
+//Si existen parámetros en la URL se obtienen 
 if (isset($_GET['controller'])) {
     $controllerName = ucfirst($_GET['controller']);
 }
@@ -18,23 +18,23 @@ if (isset($_GET['action'])) {
     $action = $_GET['action'];
 }
 
-// Formar el nombre completo del controlador con namespace
+//Se define el nombre del controlador y la acción a ejecutar
 $controllerClass = "Controllers\\{$controllerName}Controller";
 
-// Usando un enfoque más directo con el autoloader
+//Uso del Autoload para cargar el controlador solicitado
 if (class_exists($controllerClass)) {
     $controller = new $controllerClass();
-    
+
     if (method_exists($controller, $action)) {
-        // Ejecutar la acción solicitada
+        //Ejecución de la acción solicitada
         $controller->$action();
     } else {
-        // Si la acción no existe, usar el método index del Dashboard
+        //Si la acción no existe se usa el método index del Dashboard
         $dashboard = new Controllers\DashboardController();
         $dashboard->index();
     }
 } else {
-    // Si el controlador no existe, cargar el Dashboard por defecto
+    //Si el controlador no existe se carga el Dashboard por defecto
     $dashboard = new Controllers\DashboardController();
     $dashboard->index();
 }

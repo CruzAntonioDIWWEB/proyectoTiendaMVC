@@ -6,7 +6,8 @@ use PDO;
 use config\DatabaseConfig;
 
 //Clase que representa una fila de la tabla usuarios
-class User{
+class User
+{
     //Propiedades de la clase
     private $id;
     private $nombre;
@@ -146,14 +147,15 @@ class User{
         }
     }
 
-/**
- * Autentica a un usuario por su email y contraseña
- * @param string $email Email del usuario
- * @param string $password Contraseña sin cifrar
- * @param bool $recuerdame Si se debe recordar el email en una cookie
- * @return mixed El objeto User si la autenticación es correcta, false en caso contrario
- */
-public function login($email, $password, $recuerdame = false){
+    /**
+     * Autentica a un usuario por su email y contraseña
+     * @param string $email Email del usuario
+     * @param string $password Contraseña sin cifrar
+     * @param bool $recuerdame Si se debe recordar el email en una cookie
+     * @return mixed El objeto User si la autenticación es correcta, false en caso contrario
+     */
+    public function login($email, $password, $recuerdame = false)
+    {
         //Validación de entradas
         $email = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
 
@@ -162,11 +164,11 @@ public function login($email, $password, $recuerdame = false){
         $consulta->bindParam(':email', $email, PDO::PARAM_STR);
         $consulta->execute();
 
-        if($consulta->rowCount() > 0){
+        if ($consulta->rowCount() > 0) {
             $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
-        
+
             //Verifico la contraseña
-            if(password_verify($password, $usuario['password'])){
+            if (password_verify($password, $usuario['password'])) {
                 //Asigno los datos del usuario a las propiedades de la clase
                 $this->id = $usuario['id'];
                 $this->nombre = $usuario['nombre'];
@@ -174,7 +176,7 @@ public function login($email, $password, $recuerdame = false){
                 $this->email = $usuario['email'];
                 $this->rol = $usuario['rol'];
                 $this->imagen = $usuario['imagen'];
-        
+
                 //Guardo el usuario en la sesión
                 $_SESSION['usuario'] = [
                     'id' => $this->id,
@@ -183,17 +185,17 @@ public function login($email, $password, $recuerdame = false){
                     'email' => $this->email,
                     'rol' => $this->rol
                 ];
-        
+
                 $_SESSION['login'] = "Login correcto";
-        
-                if($recuerdame){
+
+                if ($recuerdame) {
                     //Creo una cookie con el email del usuario
                     setcookie('emailLogin', $this->email, time() + (30 * 24 * 60 * 60), '/');
                 } else {
                     //Si no se marca la casilla de recordar, se elimina la cookie
                     setcookie('emailLogin', "", time() - 3600, '/');
                 }
-        
+
                 return $this;
             } else {
                 //Contraseña incorrecta
@@ -203,6 +205,84 @@ public function login($email, $password, $recuerdame = false){
         } else {
             //Usuario no encontrado
             $_SESSION['errorLogin'] = "Email o contraseña incorrectos";
+            return false;
+        }
+    }
+
+    /**
+     * Obtiene un usuario por su ID
+     * @param int $id ID del usuario
+     * @return mixed El objeto User con los datos cargados, false en caso de error
+     */
+    public function getUserById($id)
+    {
+        try {
+            $query = $this->db->prepare("SELECT * FROM usuarios WHERE id = :id");
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+            $query->execute();
+
+            if ($query->rowCount() > 0) {
+                $user_data = $query->fetch(PDO::FETCH_ASSOC);
+
+                $this->id = $user_data['id'];
+                $this->nombre = $user_data['nombre'];
+                $this->apellidos = $user_data['apellidos'];
+                $this->email = $user_data['email'];
+                $this->rol = $user_data['rol'];
+                $this->imagen = $user_data['imagen'];
+
+                return $this;
+            }
+
+            return false;
+        } catch (\PDOException $e) {
+            error_log("Error al obtener usuario por ID: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Actualiza los datos del usuario en la base de datos
+     * @return bool true si la actualización fue exitosa, false en caso contrario
+     */
+    public function update()
+    {
+        try {
+            $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, email = :email";
+            $params = [
+                ':nombre' => $this->nombre,
+                ':apellidos' => $this->apellidos,
+                ':email' => $this->email,
+                ':id' => $this->id
+            ];
+
+            //Si hay una nueva contraseña se incluye en la actualización
+            if (!empty($this->password)) {
+                $sql .= ", password = :password";
+                $params[':password'] = $this->password;
+            }
+
+            //Y si se proporciona un rol se incluye en la actualización
+            if (!empty($this->rol)) {
+                $sql .= ", rol = :rol";
+                $params[':rol'] = $this->rol;
+            }
+
+            $sql .= " WHERE id = :id";
+
+            $update = $this->db->prepare($sql);
+
+            foreach ($params as $param => $value) {
+                if ($param == ':id') {
+                    $update->bindValue($param, $value, PDO::PARAM_INT);
+                } else {
+                    $update->bindValue($param, $value, PDO::PARAM_STR);
+                }
+            }
+
+            return $update->execute();
+        } catch (\PDOException $e) {
+            error_log("Error al actualizar usuario: " . $e->getMessage());
             return false;
         }
     }

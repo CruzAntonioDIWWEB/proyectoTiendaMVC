@@ -1,4 +1,5 @@
 <?php
+
 use Models\Category;
 ?>
 
@@ -13,12 +14,12 @@ use Models\Category;
 
 <div class="form_container">
     <form action="index.php?controller=category&action=update" method="POST">
-    <input type="hidden" name="id" value="<?= $categoriaEncontrada->getId() ?>">
-        
+        <input type="hidden" name="id" value="<?= $categoriaEncontrada->getId() ?>">
+
         <label for="nombre">Nombre de la categoría</label>
         <input type="text" name="nombre" value="<?= $categoriaEncontrada->getNombre() ?>" required maxlength="100" pattern="[A-Za-zÀ-ÖØ-öø-ÿ0-9\s\-\.]{3,100}">
         <small>El nombre debe tener entre 3 y 100 caracteres alfanuméricos.</small>
-        
+
         <input type="submit" value="Actualizar categoría">
     </form>
 </div>

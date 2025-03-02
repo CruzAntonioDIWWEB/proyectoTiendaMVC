@@ -23,24 +23,24 @@
     <!-- Contenido Principal -->
     <section class="central">
 
-    <?php if (!empty($featuredProducts)): ?>
-        <?php foreach($featuredProducts as $product): ?>
-            <article class="product">
-                <?php if(!empty($product['imagen'])): ?>
-                    <img src="<?= '../assets/img/' . $product['imagen'] ?>" alt="<?= $product['nombre'] ?>">
-                <?php else: ?>
-                    <img src="../assets/img/logotipo_tienda.webp" alt="Producto sin imagen">
-                <?php endif; ?>
-                
-                <h2><?= $product['nombre'] ?></h2>
-                <p><?= $product['precio'] ?>€</p>
-                
-                <?php if(isset($_SESSION['usuario'])): ?>
-                    <button class="button">Comprar</button>
-                <?php endif; ?>
-            </article>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>No hay productos disponibles para mostrar</p>
-    <?php endif; ?>
-</section>
+        <?php if (!empty($featuredProducts)): ?>
+            <?php foreach ($featuredProducts as $product): ?>
+                <article class="product">
+                    <?php if (!empty($product['imagen'])): ?>
+                        <img src="<?= '../assets/img/' . $product['imagen'] ?>" alt="<?= $product['nombre'] ?>">
+                    <?php else: ?>
+                        <img src="../assets/img/logotipo_tienda.webp" alt="Producto sin imagen">
+                    <?php endif; ?>
+
+                    <h2><?= $product['nombre'] ?></h2>
+                    <p><?= $product['precio'] ?>€</p>
+
+                    <?php if (isset($_SESSION['usuario'])): ?>
+                        <button class="button">Comprar</button>
+                    <?php endif; ?>
+                </article>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No hay productos disponibles para mostrar</p>
+        <?php endif; ?>
+    </section>

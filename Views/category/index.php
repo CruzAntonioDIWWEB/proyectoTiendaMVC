@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 use Models\Category;
 ?>
 
@@ -35,20 +36,20 @@ use Models\Category;
         </tr>
     </thead>
     <tbody>
-        <?php if (!empty($categorias)): ?>
+        <?php if (!empty($categorias)): ?> <!-- Aqui uso la variable $categorias que se ha pasado desde el controlador -->
             <?php foreach ($categorias as $categoria): ?>
                 <tr>
                     <td><?= $categoria['id'] ?></td>
                     <td><?= $categoria['nombre'] ?></td>
                     <?php if (\Lib\Utils::isAdmin()): ?>
                         <td>
-                            <a href="index.php?controller=category&action=delete&id=<?= $categoria['id'] ?>" 
-                               class="button" 
-                               onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
+                            <a href="index.php?controller=category&action=delete&id=<?= $categoria['id'] ?>"
+                                class="button"
+                                onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">
                                 Eliminar
                             </a>
-                            <a href="index.php?controller=category&action=edit&id=<?= $categoria['id'] ?>" 
-                               class="button" >
+                            <a href="index.php?controller=category&action=edit&id=<?= $categoria['id'] ?>"
+                                class="button">
                                 Editar
                             </a>
                         </td>
