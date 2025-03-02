@@ -265,5 +265,31 @@ public function delete() {
     header("Location: index.php?controller=product&action=gestion");
     exit();
 }
+
+/**
+ * Muestra los productos de una categoría específica
+ */
+public function category() {
+    if (isset($_GET['id'])) {
+        $categoria_id = (int)$_GET['id'];
+        
+        // Obtener los productos de la categoría
+        $product = new \Models\Product();
+        $products = $product->getProductsByCategory($categoria_id);
+        
+        // Obtener el nombre de la categoría para mostrarlo en la vista
+        $category_name = $product->getCategoryName($categoria_id);
+        
+        // Cargar la vista
+        require_once __DIR__ . '/../Views/layout/header.php';
+        require_once __DIR__ . '/../Views/products/category.php';
+        require_once __DIR__ . '/../Views/layout/footer.php';
+    } else {
+        // Si no se proporciona un ID de categoría, redirigir al inicio
+        header("Location: index.php");
+        exit();
+    }
+}
+
 }
 ?>

@@ -232,5 +232,49 @@ public function delete() {
         return false;
     }
 }
+
+/**
+ * Obtiene todos los productos de una categoría específica
+ * @param int $categoria_id ID de la categoría
+ * @return array Array de productos
+ */
+public function getProductsByCategory($categoria_id) {
+    try {
+        $sql = "SELECT p.*, c.nombre as categoria_nombre 
+                FROM productos p 
+                INNER JOIN categorias c ON p.categoria_id = c.id 
+                WHERE p.categoria_id = :categoria_id 
+                ORDER BY p.id DESC";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':categoria_id', $categoria_id, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (\PDOException $e) {
+        error_log("Error al obtener productos por categoría: " . $e->getMessage());
+        return [];
+    }
+}
+
+/**
+ * Obtiene el nombre de una categoría por su ID
+ * @param int $categoria_id ID de la categoría
+ * @return string Nombre de la categoría o vacío si no existe
+ */
+public function getCategoryName($categoria_id) {
+    try {
+        $sql = "SELECT nombre FROM categorias WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $categoria_id, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['nombre'] : '';
+    } catch (\PDOException $e) {
+        error_log("Error al obtener nombre de categoría: " . $e->getMessage());
+        return '';
+    }
+}
 }
 ?>
