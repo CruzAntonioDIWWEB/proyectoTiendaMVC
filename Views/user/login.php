@@ -26,8 +26,8 @@
 
         <div class="checkbox-container">
             <input type="checkbox" name="recuerdame" id="recuerdame"
-                <?= isset($_COOKIE['emailLogin']) ? 'checked' : '' ?>>
-            <label for="recuerdame">Recordar email</label>
+                <?= isset($_COOKIE['remember_me']) ? 'checked' : '' ?>>
+            <label for="recuerdame">Recuérdame</label>
         </div>
 
         <input type="submit" value="Iniciar Sesión">

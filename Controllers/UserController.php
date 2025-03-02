@@ -60,30 +60,43 @@ class UserController
     }
 
     public function loginAction()
-    {
-        if (isset($_POST) && !empty($_POST['email']) && !empty($_POST['password'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $recuerdame = isset($_POST['recuerdame']);
+{
+    if (isset($_POST) && !empty($_POST['email']) && !empty($_POST['password'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $recuerdame = isset($_POST['recuerdame']);
 
-            $user = new \Models\User();
-            $login = $user->login($email, $password, $recuerdame);
+        $user = new \Models\User();
+        $login = $user->login($email, $password, $recuerdame);
 
-            if ($login) {
-                //Redirigir a la página de inicio con el usuario logueado
-                header("Location: index.php");
-                exit();
+        if ($login) {
+            //Si el usuario marcó "recuérdame" guardo una cookie con su ID
+            if ($recuerdame) {
+                setcookie(
+                    'remember_me',
+                    $_SESSION['usuario']['id'], 
+                    time() + (7 * 24 * 60 * 60), //7 días
+                    '/'
+                );
             } else {
-                //Error al loguear
-                header("Location: index.php?controller=user&action=loginForm");
-                exit();
+                //Si existe la cookie de remember_me la elimino
+                if (isset($_COOKIE['remember_me'])) {
+                    setcookie('remember_me', '', time() - 3600, '/');
+                }
             }
+            
+            header("Location: index.php");
+            exit();
         } else {
-            $_SESSION['errorLogin'] = "Completa todos los cambios";
             header("Location: index.php?controller=user&action=loginForm");
             exit();
         }
+    } else {
+        $_SESSION['errorLogin'] = "Completa todos los campos";
+        header("Location: index.php?controller=user&action=loginForm");
+        exit();
     }
+}
 
     //Función para mostrar el formulario de login junto con el header y footer
     public function loginForm()
@@ -95,14 +108,19 @@ class UserController
 
     //Función para cerrar sesión
     public function logout()
-    {
-        if (isset($_SESSION['usuario'])) {
-            unset($_SESSION['usuario']);
+{
+    if (isset($_SESSION['usuario'])) {
+        unset($_SESSION['usuario']);
+        
+        //Elimino también la cookie de remember_me
+        if (isset($_COOKIE['remember_me'])) {
+            setcookie('remember_me', '', time() - 3600, '/');
         }
-
-        header("Location: index.php");
-        exit();
     }
+
+    header("Location: index.php");
+    exit();
+}
 
     //Función para mostrar el formulario de edición de perfil
     public function edit()
