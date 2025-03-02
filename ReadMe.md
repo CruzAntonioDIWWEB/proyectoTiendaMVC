@@ -18,62 +18,62 @@ La siguiente es la estructura del proyecto y su propósito general:
 
 ```
 PROYECTOTIENDAFINAL/
-│── assets/              # Archivos estáticos como CSS e imágenes
-│   ├── css/             # Estilos CSS
-│   │   └── styles.css   # Hoja de estilos principal
-│   └── img/             # Imágenes del proyecto
+│── assets/              
+│   ├── css/             
+│   │   └── styles.css   
+│   └── img/             
 │
-│── config/              # Archivos de configuración
-│   ├── config.php       # Configuración general del proyecto
-│   └── DatabaseConfig.php # Configuración de la base de datos
+│── config/              
+│   ├── config.php       
+│   └── DatabaseConfig.php 
 │
-│── Controllers/         # Controladores de la aplicación
-│   ├── CategoryController.php   # Controlador para las categorías
-│   ├── DashboardController.php  # Controlador del dashboard
-│   ├── ProductController.php    # Controlador de productos
-│   └── UserController.php       # Controlador de usuarios
+│── Controllers/         
+│   ├── CategoryController.php   
+│   ├── DashboardController.php  
+│   ├── ProductController.php    
+│   └── UserController.php       
 │
-│── database/            # Contiene la base de datos
-│   └── SQL.sql          # Script SQL con la estructura de la base de datos
+│── database/            
+│   └── SQL.sql          
 │
-│── Lib/                 # Librerías y utilidades
-│   └── utils.php        # Funciones de utilidad
+│── Lib/                 
+│   └── utils.php        
 │
-│── Models/              # Modelos de la aplicación
-│   ├── Category.php     # Modelo de categorías
-│   ├── Product.php      # Modelo de productos
-│   └── User.php         # Modelo de usuarios
+│── Models/              
+│   ├── Category.php     
+│   ├── Product.php      
+│   └── User.php         
 │
-│── Public/              # Carpeta pública con el punto de entrada
-│   └── index.php        # Archivo principal de la aplicación
+│── Public/              
+│   └── index.php        
 │
-│── Views/               # Vistas de la aplicación
-│   ├── category/        # Vistas relacionadas con categorías
-│   │   ├── create.php   # Crear una categoría
-│   │   ├── edit.php     # Editar una categoría
-│   │   └── index.php    # Listar categorías
-│   ├── home/            # Vista de inicio
-│   │   └── index.php    # Página principal
-│   ├── layout/          # Componentes de la interfaz
-│   │   ├── footer.php   # Pie de página
-│   │   ├── header.php   # Encabezado
-│   │   └── sidebar.php  # Barra lateral
-│   ├── products/        # Vistas relacionadas con productos
-│   │   ├── category.php # Categoría de productos
-│   │   ├── create.php   # Crear un producto
-│   │   ├── edit.php     # Editar un producto
-│   │   └── gestion.php  # Gestión de productos
-│   └── user/            # Vistas de usuario
-│       ├── edit.php     # Editar usuario
-│       ├── login.php    # Página de inicio de sesión
-│       └── registro.php # Página de registro de usuario
+│── Views/               
+│   ├── category/        
+│   │   ├── create.php   
+│   │   ├── edit.php     
+│   │   └── index.php    
+│   ├── home/            
+│   │   └── index.php    
+│   ├── layout/          
+│   │   ├── footer.php   
+│   │   ├── header.php   
+│   │   └── sidebar.php  
+│   ├── products/        
+│   │   ├── category.php 
+│   │   ├── create.php   
+│   │   ├── edit.php     
+│   │   └── gestion.php  
+│   └── user/            
+│       ├── edit.php     
+│       ├── login.php    
+│       └── registro.php 
 │
-│── vendor/              # Dependencias de Composer
+│── vendor/              
 │
-│── .env                 # Variables de entorno (credenciales y configuración)
-│── .gitignore           # Archivos ignorados en Git
-│── composer.json        # Configuración de dependencias PHP
-│── composer.lock        # Archivo de bloqueo de dependencias
+│── .env                 
+│── .gitignore           
+│── composer.json        
+│── composer.lock        
 ```
 
 ---
