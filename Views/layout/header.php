@@ -11,7 +11,7 @@ $menuCategories = $categoryModel->getAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de Chotos</title>
+    <title>Tienda de Instrumentos</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
@@ -19,8 +19,8 @@ $menuCategories = $categoryModel->getAll();
         <!-- Cabecera -->
         <header class="header">
             <section class="logo">
-                <img src="../assets/img/logotipo.jpg" alt="Logotipo">
-                <a href="index.php">Tienda de Chotos</a>
+                <img src="../assets/img/logotipo_tienda.webp" alt="Logotipo">
+                <a href="index.php">Instrumentos de Música</a>
             </section>
         </header>
 

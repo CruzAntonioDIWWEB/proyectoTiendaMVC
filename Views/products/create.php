@@ -8,7 +8,7 @@
 <?php endif; ?>
 
 <div class="form_container">
-    <form action="index.php?controller=product&action=save" method="POST">
+    <form action="index.php?controller=product&action=save" method="POST" enctype="multipart/form-data">
         <label for="nombre">Nombre del producto</label>
         <input type="text" name="nombre" required>
         
@@ -23,13 +23,13 @@
         
         <label for="categoria">Categoría del producto</label>
         <select name="categoria" required>
-        <?php foreach ($menuCategories as $categoria): ?>
-            <option>
-                <a href="index.php?controller=product&action=category&id=<?= $categoria['id'] ?>">
-                    <?= $categoria['nombre'] ?>
-                </a>
-            </option>
-        <?php endforeach; ?>
+        <?php if (isset($categories) && !empty($categories)): ?>
+            <?php foreach ($categories as $categoria): ?>
+                <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <option value="">No hay categorías disponibles</option>
+        <?php endif; ?>
         </select>
         
         <label for="imagen">Imagen del producto</label>

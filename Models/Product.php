@@ -6,7 +6,7 @@ use config\DatabaseConfig;
 
 class Product {
     private $id;
-    private $categoria;
+    private $categoria_id;
     private $nombre;
     private $descripcion;
     private $precio;
@@ -28,8 +28,8 @@ class Product {
         return $this->id;
     }
 
-    public function getCategory() {
-        return $this->categoria;
+    public function getCategoriaId() { 
+        return $this->categoria_id;
     }
 
     public function getNombre() {
@@ -61,13 +61,12 @@ class Product {
     }
 
     //Setters
-
     public function setId($id) {
         $this->id = $id;
     }
 
-    public function setCategory($categoria) {
-        $this->categoria = $categoria;
+    public function setCategoriaId($categoria_id) { 
+        $this->categoria_id = $categoria_id;
     }
 
     public function setNombre($nombre) {
@@ -103,13 +102,42 @@ class Product {
             $sql = "SELECT * FROM productos ORDER BY id DESC";
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);  //Asegura que devuelve un array asociativo
         } catch (\PDOException $e) {
             error_log("Error en la consulta de productos: " . $e->getMessage());
-            return false;
+            return [];  //Devuelve un array vacío en caso de error
         }
     }
 
-    
+    public function save(){
+        try {
+            //Valor predeterminado para el campo oferta si no está establecido
+            $oferta = $this->oferta ?? "no";  //Asumiendo que por defecto es "no"
+            
+            $sql = "INSERT INTO productos (categoria_id, nombre, descripcion, precio, stock, oferta, fecha, imagen) 
+                    VALUES (:categoria_id, :nombre, :descripcion, :precio, :stock, :oferta, CURDATE(), :imagen)";
+            
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':categoria_id', $this->categoria_id, PDO::PARAM_INT);
+            $stmt->bindParam(':nombre', $this->nombre, PDO::PARAM_STR);
+            $stmt->bindParam(':descripcion', $this->descripcion, PDO::PARAM_STR);
+            $stmt->bindParam(':precio', $this->precio, PDO::PARAM_STR);
+            $stmt->bindParam(':stock', $this->stock, PDO::PARAM_INT);
+            $stmt->bindParam(':oferta', $oferta, PDO::PARAM_STR);
+            $stmt->bindParam(':imagen', $this->imagen, PDO::PARAM_STR);
+            
+            $result = $stmt->execute();
+            
+            if($result) {
+                $this->id = $this->db->lastInsertId();
+                return true;
+            }
+            
+            return false;
+        } catch (\PDOException $e) {
+            error_log("Error al guardar el producto: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

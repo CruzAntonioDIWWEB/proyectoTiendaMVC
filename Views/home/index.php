@@ -34,23 +34,23 @@
     <!-- Contenido Principal -->
     <section class="central">
         <article class="product">
-            <img src="../assets/img/logotipo.jpg" alt="Producto">
-            <h2>Choto 1</h2>
-            <p>30€</p>
+            <img src="../assets/img/violin_1.jpg" alt="Producto">
+            <h2>Violin</h2>
+            <p>50€</p>
             <a href="#">Comprar</a>
         </article>
 
         <article class="product">
-            <img src="../assets/img/logotipo.jpg" alt="Producto">
-            <h2>Choto 2</h2>
-            <p>30€</p>
+            <img src="../assets/img/flauta_1.jpg" alt="Producto">
+            <h2>Flauta</h2>
+            <p>25€</p>
             <a href="#">Comprar</a>
         </article>
 
         <article class="product">
-            <img src="../assets/img/logotipo.jpg" alt="Producto">
-            <h2>Choto 3</h2>
-            <p>30€</p>
+            <img src="../assets/img/trompeta_1.jpg" alt="Producto">
+            <h2>Trompeta</h2>
+            <p>20€</p>
             <a href="#">Comprar</a>
         </article>
     </section>
