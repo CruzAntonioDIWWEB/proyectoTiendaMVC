@@ -12,16 +12,16 @@
         <input type="hidden" name="id" value="<?= $productoEncontrado->getId() ?>">
         
         <label for="nombre">Nombre del producto</label>
-        <input type="text" name="nombre" value="<?= $productoEncontrado->getNombre() ?>" required>
+        <input type="text" name="nombre" value="<?= $productoEncontrado->getNombre() ?>" required minlength="3" maxlength="100">
         
         <label for="descripcion">Descripción del producto</label>
-        <textarea name="descripcion" required><?= $productoEncontrado->getDescripcion() ?></textarea>
+        <textarea name="descripcion" required minlength="10" maxlength="1000"><?= $productoEncontrado->getDescripcion() ?></textarea>
         
         <label for="precio">Precio del producto</label>
-        <input type="text" name="precio" value="<?= $productoEncontrado->getPrecio() ?>" required>
+        <input type="number" name="precio" value="<?= $productoEncontrado->getPrecio() ?>" step="0.01" min="0.01" required>
         
         <label for="stock">Stock del producto</label>
-        <input type="number" name="stock" value="<?= $productoEncontrado->getStock() ?>" required>
+        <input type="number" name="stock" value="<?= $productoEncontrado->getStock() ?>" min="0" required>
         
         <label for="categoria">Categoría del producto</label>
         <select name="categoria" required>
@@ -38,11 +38,12 @@
         
         <label for="imagen">Imagen actual: <?= $productoEncontrado->getImagen() ?></label>
         <?php if ($productoEncontrado->getImagen()): ?>
-            <img src="uploads/images/<?= $productoEncontrado->getImagen() ?>" style="max-width: 200px;">
+            <img src="assets/img/<?= $productoEncontrado->getImagen() ?>" style="max-width: 200px;">
         <?php endif; ?>
         
         <label for="imagen">Cambiar imagen (opcional)</label>
-        <input type="file" name="imagen">
+        <input type="file" name="imagen" accept="image/jpeg,image/png,image/gif">
+        <small>Formatos permitidos: JPG, PNG, GIF</small>
 
         <input type="submit" value="Actualizar producto">
     </form>

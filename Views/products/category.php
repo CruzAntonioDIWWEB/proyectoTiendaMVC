@@ -23,7 +23,7 @@
             <?php foreach($products as $product): ?>
                 <article class="product">
                     <?php if(!empty($product['imagen'])): ?>
-                        <img src="<?= 'uploads/images/' . $product['imagen'] ?>" alt="<?= $product['nombre'] ?>">
+                        <img src="<?= '../assets/img/' . $product['imagen'] ?>" alt="<?= $product['nombre'] ?>">
                     <?php else: ?>
                         <img src="../assets/img/logotipo_tienda.webp" alt="Producto sin imagen">
                     <?php endif; ?>

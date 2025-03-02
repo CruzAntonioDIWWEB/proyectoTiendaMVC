@@ -10,16 +10,16 @@
 <div class="form_container">
     <form action="index.php?controller=product&action=save" method="POST" enctype="multipart/form-data">
         <label for="nombre">Nombre del producto</label>
-        <input type="text" name="nombre" required>
+        <input type="text" name="nombre" required maxlength="100">
         
         <label for="descripcion">Descripción del producto</label>
-        <textarea name="descripcion" required></textarea>
+        <textarea name="descripcion" required maxlength="1000"></textarea>
         
         <label for="precio">Precio del producto</label>
-        <input type="text" name="precio" required>
+        <input type="number" name="precio" step="0.01" min="0" required>
         
         <label for="stock">Stock del producto</label>
-        <input type="number" name="stock" required>
+        <input type="number" name="stock" min="0" required>
         
         <label for="categoria">Categoría del producto</label>
         <select name="categoria" required>
@@ -33,7 +33,7 @@
         </select>
         
         <label for="imagen">Imagen del producto</label>
-        <input type="file" name="imagen" required>
+        <input type="file" name="imagen" required accept="image/jpeg,image/png,image/gif">
 
         <input type="submit" value="Guardar producto">
     </form>
