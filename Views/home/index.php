@@ -14,12 +14,15 @@
         </div>
         <?php unset($_SESSION['register_error']); ?>
     <?php endif; ?>
-    
+
+    <h1 class="titulo_index">Productos Destacados</h1>
+
     <!-- Incluir el sidebar -->
     <?php require_once __DIR__ . '/../layout/sidebar.php'; ?>
 
     <!-- Contenido Principal -->
     <section class="central">
+
     <?php if (!empty($featuredProducts)): ?>
         <?php foreach($featuredProducts as $product): ?>
             <article class="product">
