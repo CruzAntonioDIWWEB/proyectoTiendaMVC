@@ -1,22 +1,33 @@
 <?php
-
 namespace Controllers;
+
+require_once __DIR__ . '/../Models/Product.php';
+require_once __DIR__ . '/../Models/Category.php';
 
 class DashboardController {
     
-    /**
-     * Método index que carga la vista principal del dashboard
-     * Incluye el header, el contenido de home y el footer
-     */
     public function index() {
-        // Cargar el header
-        require_once '../Views/layout/header.php';
+        // Obtener todas las categorías
+        $categoryModel = new \Models\Category();
+        $categories = $categoryModel->getAll();
         
-        // Cargar el contenido principal (home)
-        require_once '../Views/home/index.php';
+        // Obtener un producto por cada categoría
+        $productModel = new \Models\Product();
+        $featuredProducts = [];
         
-        // Cargar el footer
-        require_once '../Views/layout/footer.php';
+        foreach ($categories as $category) {
+            // Obtenemos todos los productos de la categoría
+            $productsInCategory = $productModel->getProductsByCategory($category['id']);
+            
+            // Si hay productos en esta categoría, tomamos el primero
+            if (!empty($productsInCategory)) {
+                $featuredProducts[] = $productsInCategory[0]; // Tomamos el primer producto (el más reciente)
+            }
+        }
+        
+        // Incluir las vistas
+        require_once __DIR__ . '/../Views/layout/header.php';
+        require_once __DIR__ . '/../Views/home/index.php';
+        require_once __DIR__ . '/../Views/layout/footer.php';
     }
 }
-?>
